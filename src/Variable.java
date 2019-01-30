@@ -41,6 +41,5 @@ public final class Variable extends AbstractToken implements Token{
         else {
             return new Variable(representation);
         }
-
     }
 }
