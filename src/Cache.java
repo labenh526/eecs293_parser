@@ -5,8 +5,10 @@ public final class Cache<T, V> {
 
     private Map<T, V> cache;
 
+    /* Changed constructor back to private as per the instructions.
+     * However, currently the cache only works with a public constructor. */
     private Cache(Map<T, V> cache) {
-        this.cache = null;
+        this.cache = cache;
     }
 
     V get(T key, Function<? super T, ? extends V> constructor) {
@@ -14,7 +16,7 @@ public final class Cache<T, V> {
             return this.getCache().computeIfAbsent(key, k -> constructor.apply(key));
         }
         catch (NullPointerException e) {
-            System.out.println("Either T or constructor is null");
+            System.out.println("T or constructor is null");
             return null;
         }
     }
