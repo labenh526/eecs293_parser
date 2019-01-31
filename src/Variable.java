@@ -1,12 +1,23 @@
-public final class Variable extends AbstractToken implements  Token{
+import java.util.function.Function;
 
-    private String representation = "";
+public final class Variable extends AbstractToken implements Token{
 
+    //Stores the representation for the variable
+    private String representation = null;
+
+    //Stores cache of all created variables
+    static Cache<String, Variable> cache;
+
+    // private Constructor to create variable
     private Variable(String representation) {
-        super(TerminalSignal.VARIABLE);
-        this.representation = representation;
+        this.setRepresentation(representation);
     }
 
+    public final String getRepresentation() {
+        return representation;
+    }
+
+    //All variables will always return the type VARIABLE
     @Override
     public TerminalSignal getType() {
         return TerminalSignal.VARIABLE;
@@ -14,15 +25,23 @@ public final class Variable extends AbstractToken implements  Token{
 
     @Override
     public String toString() {
-        return representation;
+        return this.getRepresentation();
     }
 
-    public final String getRepresentation() {
-        return representation;
+    public final void setRepresentation(String representation) {
+        this.representation = representation;
     }
+
+
 
     public static final Variable build(String representation) {
-        Variable newRep = new Variable(representation);
-        return newRep;
+
+        Function<String, Variable> construct = (String key) -> new Variable(key);
+
+        //Error check for null strings
+        if (representation == null){
+            throw new NullPointerException("Variable representation cannot be null");
+        }
+        return cache.get(representation, construct);
     }
 }
