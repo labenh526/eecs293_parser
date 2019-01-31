@@ -10,22 +10,17 @@ public final class Cache<T, V> {
     }
 
     V get(T key, Function<? super T, ? extends V> constructor) {
-        System.out.println("Function is called");
-        if(key == null){
-            throw new NullPointerException("Key must not be null");
+        try  {
+            return this.getCache().computeIfAbsent(key, k -> constructor.apply(key));
         }
-        else if (constructor == null){
-            throw new NullPointerException("Constructor must not be null");
+        catch (NullPointerException e) {
+            System.out.println("Either T or constructor is null");
+            return null;
         }
-        if (cache.containsValue(key)){
-            System.out.println("Key was inside cache");
-            return cache.get(key);
-        }
-        else{
-            System.out.println("new item needs to be generated");
-            cache.put(key,constructor.apply(key));
-        }
-    throw new NullPointerException("Incorrect use of get function");
+    }
+
+    public Map<T, V> getCache() {
+        return cache;
     }
 
 }
