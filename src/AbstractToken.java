@@ -1,19 +1,15 @@
-import javax.swing.*;
-
 public abstract class AbstractToken implements Token{
-    private final TerminalSignal type;
-
-    public AbstractToken(TerminalSignal type) {
-        this.type = type;
-    }
 
     @Override
-    public final boolean matches(TerminalSignal type) {
-        return this.type == type;
-    }
+    public abstract TerminalSignal getType();
 
-    @Override
-    public TerminalSignal getType() {
-        return type;
-    }
+
+    public final boolean matches(TerminalSignal type){
+        if (this.getType()==type){
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
 }
