@@ -1,6 +1,10 @@
+import java.util.function.Function;
+
 public final class Connector extends AbstractToken{
 
     private TerminalSignal connectorType;
+
+    static Cache<TerminalSignal,Connector> cache;
 
     //private constructor to create a connector
     private Connector(TerminalSignal type) {
@@ -35,16 +39,17 @@ public final class Connector extends AbstractToken{
     }
 
     public static final Connector build(TerminalSignal type) {
+
+        Function<TerminalSignal, Connector> construct = (TerminalSignal key) -> new Connector(key);
+
         if (type == null){
             throw new NullPointerException("Cannot create connector from type null");
         }
-        else if(isValidConnector(type)){
-            return new Connector(type);
-        }
-        else {
+        else if(!isValidConnector(type)){
             throw new IllegalArgumentException("Method requires TerminalSignals of type: PLUS, MINUS, " +
                     "TIMES, DIVIDE, OPEN, or CLOSE.");
         }
+        return cache.get(type,construct);
     }
 
     //Helper method to check to see if a TerminalSignal is one of the valid connector types
@@ -66,4 +71,7 @@ public final class Connector extends AbstractToken{
         //If no valid connector types were found
         return false;
     }
+
+
 }
+

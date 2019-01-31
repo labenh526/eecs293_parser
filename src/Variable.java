@@ -1,3 +1,5 @@
+import java.util.function.Function;
+
 public final class Variable extends AbstractToken implements Token{
 
     //Stores the representation for the variable
@@ -30,16 +32,16 @@ public final class Variable extends AbstractToken implements Token{
         this.representation = representation;
     }
 
+
+
     public static final Variable build(String representation) {
+
+        Function<String, Variable> construct = (String key) -> new Variable(key);
+
         //Error check for null strings
         if (representation == null){
             throw new NullPointerException("Variable representation cannot be null");
         }
-        else if (false){
-            //TEST TO SEE IF VARIABLE ALREADY EXISTS
-        }
-        else {
-            return new Variable(representation);
-        }
+        return cache.get(representation, construct);
     }
 }
