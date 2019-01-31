@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 public final class LeafNode implements Node{
 
-    private /*final*/ Token leaf;
+    private final Token leaf;
 
     private LeafNode(Token leaf) {
         this.leaf = leaf;
@@ -12,16 +13,23 @@ public final class LeafNode implements Node{
     }
 
     public static final LeafNode build(Token newLeaf) {
-        return null;
+        if (newLeaf == null) {
+            throw new NullPointerException();
+        } else {
+            LeafNode leaf = new LeafNode(newLeaf);
+            return leaf;
+        }
     }
 
     @Override
     public List<Token> toList() {
-        return null;
+        List<Token> leafTree = new ArrayList<Token>();
+        leafTree.add(getLeaf());
+        return leafTree;
     }
 
     @Override
     public String toString() {
-        return null;
+        return leaf.toString();
     }
 }

@@ -2,29 +2,27 @@ public final class Variable extends AbstractToken implements  Token{
 
     private String representation = "";
 
-    public Variable(String representation) {
+    private Variable(String representation) {
+        super(TerminalSignal.VARIABLE);
         this.representation = representation;
     }
 
     @Override
     public TerminalSignal getType() {
-        return null;
+        return TerminalSignal.VARIABLE;
     }
 
     @Override
     public String toString() {
-        return "f";
+        return representation;
     }
 
     public final String getRepresentation() {
         return representation;
     }
 
-    public final void setRepresentation(String representation) {
-        this.representation = representation;
-    }
-
     public static final Variable build(String representation) {
-        return null;
+        Variable newRep = new Variable(representation);
+        return newRep;
     }
 }
