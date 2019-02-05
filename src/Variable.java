@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public final class Variable extends AbstractToken implements Token{
@@ -6,7 +8,8 @@ public final class Variable extends AbstractToken implements Token{
     private String representation = null;
 
     //Stores cache of all created variables
-    static Cache<String, Variable> cache;
+    //cache works properly if Cache constructor is public
+    static Cache<String, Variable> cache = new Cache<>(new HashMap<>());
 
     // private Constructor to create variable
     private Variable(String representation) {

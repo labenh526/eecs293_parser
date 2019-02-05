@@ -1,10 +1,12 @@
+import java.util.HashMap;
 import java.util.function.Function;
 
 public final class Connector extends AbstractToken{
 
     private TerminalSignal connectorType;
 
-    static Cache<TerminalSignal,Connector> cache;
+    //cache works properly if Cache constructor is public
+    static Cache<TerminalSignal,Connector> cache = new Cache<>(new HashMap<>());
 
     //private constructor to create a connector
     private Connector(TerminalSignal type) {
