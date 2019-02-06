@@ -1,27 +1,19 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import static java.util.Objects.requireNonNull;
 
 public final class Cache<T, V> {
 
-    private Map<T, V> cache;
+    private Map<T, V> cache = new HashMap<>();
 
-    /* Changed constructor back to private as per the instructions.
-     * However, currently the cache only works with a public constructor. */
-    private Cache(Map<T, V> cache) {
-        this.cache = cache;
-    }
 
     V get(T key, Function<? super T, ? extends V> constructor) {
-        try  {
-            return this.getCache().computeIfAbsent(key, k -> constructor.apply(key));
-        }
-        catch (NullPointerException e) {
-            System.out.println("T or constructor is null");
-            return null;
-        }
+        return this.getCache().computeIfAbsent(requireNonNull(key, "Key cannot be null."),
+                requireNonNull(constructor, "Constructor cannot be null."));
     }
 
-    public Map<T, V> getCache() {
+    private Map<T, V> getCache() {
         return cache;
     }
 

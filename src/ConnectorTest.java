@@ -12,15 +12,15 @@ class ConnectorTest {
     String times = "*";
     String divide = "/";
 
-    //Create TerminalSignals
-    Token.TerminalSignal OPEN = Token.TerminalSignal.OPEN;
-    Token.TerminalSignal CLOSE = Token.TerminalSignal.CLOSE;
-    Token.TerminalSignal PLUS = Token.TerminalSignal.PLUS;
-    Token.TerminalSignal MINUS = Token.TerminalSignal.MINUS;
-    Token.TerminalSignal TIMES = Token.TerminalSignal.TIMES;
-    Token.TerminalSignal DIVIDE = Token.TerminalSignal.DIVIDE;
-    Token.TerminalSignal VARIABLE = Token.TerminalSignal.VARIABLE;
-    Token.TerminalSignal nullTOKEN = null;
+    //Create TerminalSymbols
+    Token.TerminalSymbol OPEN = Token.TerminalSymbol.OPEN;
+    Token.TerminalSymbol CLOSE = Token.TerminalSymbol.CLOSE;
+    Token.TerminalSymbol PLUS = Token.TerminalSymbol.PLUS;
+    Token.TerminalSymbol MINUS = Token.TerminalSymbol.MINUS;
+    Token.TerminalSymbol TIMES = Token.TerminalSymbol.TIMES;
+    Token.TerminalSymbol DIVIDE = Token.TerminalSymbol.DIVIDE;
+    Token.TerminalSymbol VARIABLE = Token.TerminalSymbol.VARIABLE;
+    Token.TerminalSymbol nullTOKEN = null;
 
     //Create connectors
     Connector openCon;

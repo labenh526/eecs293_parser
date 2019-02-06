@@ -3,18 +3,18 @@ import java.util.function.Function;
 
 public final class Connector extends AbstractToken{
 
-    private TerminalSignal connectorType;
+    private TerminalSymbol connectorType;
 
     //cache works properly if Cache constructor is public
-    static Cache<TerminalSignal,Connector> cache = new Cache<>(new HashMap<>());
+    private static Cache<TerminalSymbol,Connector> cache = new Cache<>();
 
     //private constructor to create a connector
-    private Connector(TerminalSignal type) {
+    private Connector(TerminalSymbol type) {
         connectorType = type;
     }
 
     @Override
-    public TerminalSignal getType(){
+    public TerminalSymbol getType(){
         return connectorType;
     }
 
@@ -22,7 +22,7 @@ public final class Connector extends AbstractToken{
     public String toString() {
         //Switch statement to return the character representation on each of the valid tokens
         //No need for break statements because each case causes the method to return
-        switch(this.getType()){
+        switch(this.getType()){  /*TODO: Do this with less complexity */
             case PLUS:
                 return "+";
             case MINUS:
@@ -40,38 +40,32 @@ public final class Connector extends AbstractToken{
         throw new IllegalArgumentException("Not valid connector");
     }
 
-    public static final Connector build(TerminalSignal type) {
-
-        Function<TerminalSignal, Connector> construct = (TerminalSignal key) -> new Connector(key);
+    public static final Connector build(TerminalSymbol type) {
 
         if (type == null){
             throw new NullPointerException("Cannot create connector from type null");
         }
         else if(!isValidConnector(type)){
-            throw new IllegalArgumentException("Method requires TerminalSignals of type: PLUS, MINUS, " +
+            throw new IllegalArgumentException("Method requires TerminalSymbols of type: PLUS, MINUS, " +
                     "TIMES, DIVIDE, OPEN, or CLOSE.");
         }
-        return cache.get(type,construct);
+        return cache.get(type,Connector::new);
     }
 
-    //Helper method to check to see if a TerminalSignal is one of the valid connector types
-    private static boolean isValidConnector(TerminalSignal type) {
+    //Helper method to check to see if a TerminalSymbol is one of the valid connector types
+    private static boolean isValidConnector(TerminalSymbol type) {
         switch (type) {
+            /* TODO: Lower complexity */
             case PLUS:
-                return true;
             case MINUS:
-                return true;
             case TIMES:
-                return true;
             case DIVIDE:
-                return true;
             case OPEN:
-                return true;
             case CLOSE:
                 return true;
+            default:
+                return false;
         }
-        //If no valid connector types were found
-        return false;
     }
 
 

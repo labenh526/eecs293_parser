@@ -23,7 +23,7 @@ public final class LeafNode implements Node{
 
     @Override
     public List<Token> toList() {
-        List<Token> leafTree = new ArrayList<Token>();
+        List<Token> leafTree = new ArrayList<>();
         leafTree.add(getLeaf());
         return leafTree;
     }

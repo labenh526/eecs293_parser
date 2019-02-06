@@ -1,10 +1,10 @@
 public interface Token {
 
-    enum TerminalSignal{VARIABLE, PLUS, MINUS, TIMES, DIVIDE, OPEN, CLOSE};
+    enum TerminalSymbol{VARIABLE, PLUS, MINUS, TIMES, DIVIDE, OPEN, CLOSE};
 
-    TerminalSignal getType();
+    TerminalSymbol getType();
 
-    boolean matches(TerminalSignal type);
+    boolean matches(TerminalSymbol type);
 
 }
 

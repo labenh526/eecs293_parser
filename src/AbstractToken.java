@@ -1,15 +1,10 @@
 public abstract class AbstractToken implements Token{
 
     @Override
-    public abstract TerminalSignal getType();
+    public abstract TerminalSymbol getType();
 
 
-    public final boolean matches(TerminalSignal type){
-        if (this.getType()==type){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public final boolean matches(TerminalSymbol type){
+        return this.getType() == type;
     };
 }

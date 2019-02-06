@@ -9,7 +9,7 @@ public final class Variable extends AbstractToken implements Token{
 
     //Stores cache of all created variables
     //cache works properly if Cache constructor is public
-    static Cache<String, Variable> cache = new Cache<>(new HashMap<>());
+    private static Cache<String, Variable> cache = new Cache<>();
 
     // private Constructor to create variable
     private Variable(String representation) {
@@ -22,8 +22,8 @@ public final class Variable extends AbstractToken implements Token{
 
     //All variables will always return the type VARIABLE
     @Override
-    public TerminalSignal getType() {
-        return TerminalSignal.VARIABLE;
+    public TerminalSymbol getType() {
+        return TerminalSymbol.VARIABLE;
     }
 
     @Override
