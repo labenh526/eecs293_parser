@@ -28,9 +28,9 @@ class VariableTest {
 
     @Test
     void getType() {
-        assertEquals(Token.TerminalSymbol.VARIABLE, v1.getType());
-        assertEquals(Token.TerminalSymbol.VARIABLE, v2.getType());
-        assertEquals(Token.TerminalSymbol.VARIABLE, v3.getType());
+        assertEquals(TerminalSymbol.VARIABLE, v1.getType());
+        assertEquals(TerminalSymbol.VARIABLE, v2.getType());
+        assertEquals(TerminalSymbol.VARIABLE, v3.getType());
     }
 
     @Test

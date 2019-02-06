@@ -13,14 +13,14 @@ class ConnectorTest {
     String divide = "/";
 
     //Create TerminalSymbols
-    Token.TerminalSymbol OPEN = Token.TerminalSymbol.OPEN;
-    Token.TerminalSymbol CLOSE = Token.TerminalSymbol.CLOSE;
-    Token.TerminalSymbol PLUS = Token.TerminalSymbol.PLUS;
-    Token.TerminalSymbol MINUS = Token.TerminalSymbol.MINUS;
-    Token.TerminalSymbol TIMES = Token.TerminalSymbol.TIMES;
-    Token.TerminalSymbol DIVIDE = Token.TerminalSymbol.DIVIDE;
-    Token.TerminalSymbol VARIABLE = Token.TerminalSymbol.VARIABLE;
-    Token.TerminalSymbol nullTOKEN = null;
+    TerminalSymbol OPEN = TerminalSymbol.OPEN;
+    TerminalSymbol CLOSE = TerminalSymbol.CLOSE;
+    TerminalSymbol PLUS = TerminalSymbol.PLUS;
+    TerminalSymbol MINUS = TerminalSymbol.MINUS;
+    TerminalSymbol TIMES = TerminalSymbol.TIMES;
+    TerminalSymbol DIVIDE = TerminalSymbol.DIVIDE;
+    TerminalSymbol VARIABLE = TerminalSymbol.VARIABLE;
+    TerminalSymbol nullTOKEN = null;
 
     //Create connectors
     Connector openCon;
