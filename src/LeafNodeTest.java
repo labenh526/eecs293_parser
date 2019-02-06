@@ -1,38 +1,57 @@
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-class LeafNodeTest {
+public class LeafNodeTest {
 
-    Token leaf1, leaf2, leaf3;
+    TerminalSymbol OPEN = TerminalSymbol.OPEN;
+    TerminalSymbol CLOSE = TerminalSymbol.CLOSE;
 
-    LeafNode lN1, lN2, lN3;
+    String s1 = "variable 1";
+    String s2 = "variable 2";
 
+    Variable v1 = Variable.build(s1);
+    Variable v2 = Variable.build(s2);
+    Connector c1 = Connector.build(OPEN);
+    Connector c2 = Connector.build(CLOSE);
+
+    LeafNode ln1 = LeafNode.build(v1);
+    LeafNode ln2 = LeafNode.build(v2);
+    LeafNode ln3 = LeafNode.build(c1);
+    LeafNode ln4 = LeafNode.build(c2);
 
     @Test
-    void build() {
-        //assertThrows(NullPointerException.class, () -> {LeafNode.build(null);});
-        assertEquals(leaf1,LeafNode.build(leaf1).getLeaf());
-        assertEquals(leaf2,LeafNode.build(leaf2).getLeaf());
-        assertEquals(leaf3,LeafNode.build(leaf3).getLeaf());
+    public void build() {
+        assertEquals(v1,ln1.getLeaf());
+        assertEquals(v2,ln2.getLeaf());
+        assertEquals(c1,ln3.getLeaf());
+        assertEquals(c2,ln4.getLeaf());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testBuildNullPointerException() {
+        LeafNode.build(null);
+    }
+    @Test
+    public void getLeaf() {
+        assertEquals(v1,ln1.getLeaf());
+        assertEquals(v2,ln2.getLeaf());
+        assertEquals(c1,ln3.getLeaf());
+        assertEquals(c2,ln4.getLeaf());
     }
 
     @Test
-    void getLeaf() {
-        lN1 = LeafNode.build(leaf1);
-        lN2 = LeafNode.build(leaf2);
-        lN3 = LeafNode.build(leaf3);
-        assertEquals(leaf1, lN1.getLeaf());
-        assertEquals(leaf2, lN2.getLeaf());
-        assertEquals(leaf3, lN3.getLeaf());
+    public void toList() {
+        assertEquals(v1,ln1.toList().get(0));
+        assertEquals(v2,ln2.toList().get(0));
+        assertEquals(c1,ln3.toList().get(0));
+        assertEquals(c2,ln4.toList().get(0));
     }
 
     @Test
-    void toList() {
-
-    }
-
-    @Test
-    void testToString() {
+    public void testToString() {
+        assertEquals(s1,ln1.toString());
+        assertEquals(s2,ln2.toString());
+        assertEquals("(",ln3.toString());
+        assertEquals(")",ln4.toString());
     }
 }

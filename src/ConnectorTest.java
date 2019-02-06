@@ -38,7 +38,7 @@ public class ConnectorTest {
         assertEquals(minus, Connector.build(MINUS).toString());
         assertEquals(times, Connector.build(TIMES).toString());
         assertEquals(divide, Connector.build(DIVIDE).toString());
-        
+
     }
     @Test(expected = NullPointerException.class)
     public void testBuildNullPointerException() {
