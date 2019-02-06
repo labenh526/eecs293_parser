@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public final class InternalNode implements Node {
 
@@ -7,7 +8,7 @@ public final class InternalNode implements Node {
     private String childString = "";
 
     private InternalNode(List<Node> children) {
-        this.children = children;
+        this.children = Collections.unmodifiableList(children);
     }
 
     @Override
