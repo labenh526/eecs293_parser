@@ -12,8 +12,9 @@ public enum TerminalSymbol implements Symbol{
             //List<Token> remainder = new ArrayList<>();
             //Collections.copy(remainder, input);
             //remainder.remove(0);
-            return ParseState.build(LeafNode.build(token),input.subList(1,input.size()-1));
+            return ParseState.build(LeafNode.build(token),input.subList(1,input.size()));
         } else {
+            System.out.println("Parse returned failure");
             return ParseState.FAILURE;
         }
     }

@@ -35,8 +35,8 @@ public class SymbolSequenceTest {
     TerminalSymbol VARIABLE = TerminalSymbol.VARIABLE;
     TerminalSymbol nullTOKEN = null;
 
-    TerminalSymbol[] symbolArray1 = {OPEN, PLUS, MINUS, TIMES, DIVIDE};
-    TerminalSymbol[] symbolArray2 = {OPEN, PLUS, MINUS};
+    TerminalSymbol[] symbolArray1 = {OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE};
+    TerminalSymbol[] symbolArray2 = {OPEN, CLOSE, PLUS, MINUS};
 
     List<Symbol> list1 = new ArrayList<>(Arrays.asList(symbolArray1));
     List<Symbol> list2 = new ArrayList<>(Arrays.asList(symbolArray2));
@@ -60,8 +60,8 @@ public class SymbolSequenceTest {
 
     @Test
     public void build() {
-        assertEquals("[OPEN, PLUS, MINUS, TIMES, DIVIDE]", SymbolSequence.build(list1).toString());
-        assertEquals("[OPEN, PLUS, MINUS]", SymbolSequence.build(list2).toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE]", SymbolSequence.build(list1).toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS]", SymbolSequence.build(list2).toString());
     }
 
     @Test(expected = NullPointerException.class)
@@ -71,26 +71,26 @@ public class SymbolSequenceTest {
 
     @Test
     public void buildMultiple() {
-        assertEquals("[OPEN, PLUS, MINUS, TIMES, DIVIDE]", SymbolSequence.build(OPEN, PLUS, MINUS, TIMES, DIVIDE).toString());
-        assertEquals("[OPEN, PLUS, MINUS]", SymbolSequence.build(OPEN, PLUS, MINUS).toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE]", SymbolSequence.build(OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE).toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS]", SymbolSequence.build(OPEN, CLOSE, PLUS, MINUS).toString());
     }
     @Test(expected = NullPointerException.class)
     public void testBuildMultipleNullPointerException() {
         SymbolSequence.build(OPEN, PLUS, null,  MINUS);
     }
 
-    SymbolSequence ss1 = SymbolSequence.build(OPEN, PLUS, MINUS, TIMES, DIVIDE);
-    SymbolSequence ss2 = SymbolSequence.build(OPEN, PLUS, MINUS);
+    SymbolSequence ss1 = SymbolSequence.build(OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE);
+    SymbolSequence ss2 = SymbolSequence.build(OPEN, CLOSE, PLUS, MINUS);
 
     @Test
     public void testToString() {
-        assertEquals("[OPEN, PLUS, MINUS, TIMES, DIVIDE]", ss1.toString());
-        assertEquals("[OPEN, PLUS, MINUS]", ss2.toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS, TIMES, DIVIDE]", ss1.toString());
+        assertEquals("[OPEN, CLOSE, PLUS, MINUS]", ss2.toString());
     }
 
     @Test
     public void match() {
         assertTrue(ss1.match(tokenList1).hasNoRemainder());
-        assertFalse(ss1.match(tokenList2).hasNoRemainder());
+        assertFalse(ss2.match(tokenList1).hasNoRemainder());
     }
 }
