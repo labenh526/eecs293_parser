@@ -1,7 +1,7 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-class VariableTest {
+public class VariableTest {
 
     String s1 = "X";
     String s2 = "Y";
@@ -9,32 +9,40 @@ class VariableTest {
 
     String nullString = null;
 
-    Variable v1, v2, v3;
+    Variable v1 = Variable.build(s1);
+    Variable v2 = Variable.build(s2);
+    Variable v3 = Variable.build(s3);
+
 
     @Test
-    void build() {
+    public void build() {
         assertEquals("X",Variable.build(s1).getRepresentation());
         assertEquals("Y",Variable.build(s2).getRepresentation());
         assertEquals("Number",Variable.build(s3).getRepresentation());
-        assertThrows(NullPointerException.class, () -> {Variable.build(nullString);});
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testBuildNullPointerException() {
+        Variable.build(nullString);
+    }
+
+
     @Test
-    void getRepresentation() {
+    public void getRepresentation() {
         assertEquals("X", v1.getRepresentation());
         assertEquals("Y", v2.getRepresentation());
         assertEquals("Number", v3.getRepresentation());
     }
 
     @Test
-    void getType() {
+    public void getType() {
         assertEquals(TerminalSymbol.VARIABLE, v1.getType());
         assertEquals(TerminalSymbol.VARIABLE, v2.getType());
         assertEquals(TerminalSymbol.VARIABLE, v3.getType());
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         assertEquals("X", v1.toString());
         assertEquals("Y", v2.toString());
         assertEquals("Number", v3.toString());
@@ -42,10 +50,11 @@ class VariableTest {
 
 
     @Test
-    void setRepresentation() {
-        v2.setRepresentation("Why");
-        assertFalse(v2.getRepresentation()=="Y");
-        assertTrue(v2.getRepresentation()=="Why");
+    public void setRepresentation() {
+        Variable v4 = Variable.build("W");
+        v4.setRepresentation("Double You");
+        assertFalse(v4.getRepresentation()=="W");
+        assertTrue(v4.getRepresentation()=="Double You");
     }
 
 
