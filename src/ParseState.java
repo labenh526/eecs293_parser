@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class ParseState {
     private final boolean success;
@@ -23,11 +24,16 @@ public class ParseState {
     }
 
     public List<Token> getRemainder() {
-        return remainder;
+        return Objects.requireNonNull(remainder, "remainder cannot be null");
     }
 
     final boolean hasNoRemainder(){
-        return this.getRemainder().isEmpty();
+        try {
+            return this.getRemainder().isEmpty();
+        }
+        catch (NullPointerException e){
+            return true;
+        }
     }
 
     final static ParseState FAILURE = new ParseState(false,null,null);
