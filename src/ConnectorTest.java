@@ -1,8 +1,7 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ConnectorTest {
+public class ConnectorTest {
 
     //Create strings
     String open = "(";
@@ -23,29 +22,37 @@ class ConnectorTest {
     TerminalSymbol nullTOKEN = null;
 
     //Create connectors
-    Connector openCon;
-    Connector closeCon;
-    Connector plusCon;
-    Connector minusCon;
-    Connector timesCon;
-    Connector divideCon;
+    Connector openCon = Connector.build(OPEN);
+    Connector closeCon = Connector.build(CLOSE);
+    Connector plusCon = Connector.build(PLUS);
+    Connector minusCon = Connector.build(MINUS);
+    Connector timesCon = Connector.build(TIMES);
+    Connector divideCon = Connector.build(DIVIDE);
 
 
     @Test
-    void build() {
+    public void build() {
         assertEquals(open, Connector.build(OPEN).toString());
         assertEquals(close, Connector.build(CLOSE).toString());
         assertEquals(plus, Connector.build(PLUS).toString());
         assertEquals(minus, Connector.build(MINUS).toString());
         assertEquals(times, Connector.build(TIMES).toString());
         assertEquals(divide, Connector.build(DIVIDE).toString());
-
-        assertThrows(NullPointerException.class, () -> {Connector.build(nullTOKEN);});
-        assertThrows(IllegalArgumentException.class, () -> {Connector.build(VARIABLE);});
+        
+    }
+    @Test(expected = NullPointerException.class)
+    public void testBuildNullPointerException() {
+        Connector.build(nullTOKEN);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildIllegalArgException() {
+        Connector.build(VARIABLE);
     }
 
+
+
     @Test
-    void getType() {
+    public void getType() {
         assertEquals(OPEN, openCon.getType());
         assertEquals(CLOSE, closeCon.getType());
         assertEquals(PLUS, plusCon.getType());
@@ -55,7 +62,7 @@ class ConnectorTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         assertEquals(open, openCon.toString());
         assertEquals(close, closeCon.toString());
         assertEquals(plus, plusCon.toString());

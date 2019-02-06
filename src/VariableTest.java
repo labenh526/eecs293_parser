@@ -1,7 +1,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-class VariableTest {
+public class VariableTest {
 
     String s1 = "X";
     String s2 = "Y";
