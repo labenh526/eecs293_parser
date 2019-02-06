@@ -32,7 +32,7 @@ public class ParseState {
 
     final static ParseState FAILURE = new ParseState(false,null,null);
 
-    public ParseState build(Node node, List<Token> remainder){
+    public static ParseState build(Node node, List<Token> remainder){
         if(node==null){
             throw new NullPointerException("Node cannot be null");
         }
