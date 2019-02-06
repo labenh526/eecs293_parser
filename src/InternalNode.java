@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
 public final class InternalNode implements Node {
 
     private final List<Node> children;
@@ -25,13 +27,7 @@ public final class InternalNode implements Node {
     }
 
     public static final InternalNode build(List<Node> children) {
-        /* TODO: Immutable list */
-        if (children == null) {
-            throw new NullPointerException();
-        } else {
-            InternalNode internalNode = new InternalNode(children);
-            return internalNode;
-        }
+        return new InternalNode(Objects.requireNonNull(children, "children must not be null."));
     }
 
     @Override
