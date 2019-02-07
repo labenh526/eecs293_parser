@@ -1,9 +1,21 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public final class Connector extends AbstractToken{
 
     private TerminalSymbol connectorType;
+
+    Map<TerminalSymbol,String> stringMap = new HashMap<TerminalSymbol, String>(){
+        {
+            put(TerminalSymbol.PLUS,"+");
+            put(TerminalSymbol.MINUS,"-");
+            put(TerminalSymbol.TIMES,"*");
+            put(TerminalSymbol.DIVIDE,"/");
+            put(TerminalSymbol.OPEN,"(");
+            put(TerminalSymbol.CLOSE,")");
+        }
+    };
 
     //cache works properly if Cache constructor is public
     private static Cache<TerminalSymbol,Connector> cache = new Cache<>();
@@ -20,24 +32,10 @@ public final class Connector extends AbstractToken{
 
     @Override
     public String toString() {
-        //Switch statement to return the character representation on each of the valid tokens
-        //No need for break statements because each case causes the method to return
-        switch(this.getType()){  /*TODO: Do this with less complexity */
-            case PLUS:
-                return "+";
-            case MINUS:
-                return "-";
-            case TIMES:
-                return "*";
-            case DIVIDE:
-                return "/";
-            case OPEN:
-                return "(";
-            case CLOSE:
-                return ")";
+        if(this.getType()==null){
+            throw new IllegalArgumentException("Not valid connector");
         }
-        //If no condition was found;
-        throw new IllegalArgumentException("Not valid connector");
+        return stringMap.get(this.getType());
     }
 
     public static final Connector build(TerminalSymbol type) {
@@ -54,18 +52,20 @@ public final class Connector extends AbstractToken{
 
     //Helper method to check to see if a TerminalSymbol is one of the valid connector types
     private static boolean isValidConnector(TerminalSymbol type) {
-        switch (type) {
-            /* TODO: Lower complexity */
-            case PLUS:
-            case MINUS:
-            case TIMES:
-            case DIVIDE:
-            case OPEN:
-            case CLOSE:
-                return true;
-            default:
-                return false;
-        }
+
+        Map<TerminalSymbol,Boolean> booleanMap = new HashMap<TerminalSymbol,Boolean>(){
+            {
+                put(TerminalSymbol.PLUS,true);
+                put(TerminalSymbol.MINUS,true);
+                put(TerminalSymbol.TIMES,true);
+                put(TerminalSymbol.DIVIDE,true);
+                put(TerminalSymbol.OPEN,true);
+                put(TerminalSymbol.CLOSE,true);
+                put(TerminalSymbol.VARIABLE,false);
+            }
+        };
+        return booleanMap.get(type);
+
     }
 
 

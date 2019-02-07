@@ -34,6 +34,7 @@ public class NonTerminalSymbolTest {
     @Test
     public void parseInput() {
         Node root = NonTerminalSymbol.parseInput(list1).get();
+     //   System.out.print("Test");
 
     }
 }
