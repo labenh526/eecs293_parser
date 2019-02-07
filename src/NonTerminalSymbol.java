@@ -36,17 +36,24 @@ public enum NonTerminalSymbol implements Symbol {
         }
     };
 
-//(
     @Override
     public ParseState parse(List<Token> input) {
         for (SymbolSequence seq: nonTerminalMap.get(this)) {
             ParseState state = seq.match(Objects.requireNonNull(input,"Input cannot be null"));
-            if(state != ParseState.FAILURE)
+            if(state.isSuccess())
                 return state;
         }
         return ParseState.FAILURE;
     }
 
-
-
+    static final Optional<Node> parseInput(List<Token> input){
+        ParseState testParse = EXPRESSION.parse(Objects.requireNonNull(input, "Input cannot be null"));
+        if (!testParse.isSuccess())
+            return Optional.empty();
+        else if (testParse.hasNoRemainder())
+            return Optional.of(testParse.getNode());
+        else
+            return Optional.empty();
+    }
+    
 }
