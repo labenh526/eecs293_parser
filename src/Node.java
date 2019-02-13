@@ -2,5 +2,8 @@ import java.util.List;
 
 public interface Node {
 
-    public List<Token> toList();
+    List<Token> toList();
+    List<Node> getChildren();
+    boolean isFruitful();
+
 }

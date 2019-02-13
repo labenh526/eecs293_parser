@@ -24,6 +24,16 @@ public final class LeafNode implements Node{
     }
 
     @Override
+    public List<Node> getChildren() {
+        return null;
+    }
+
+    @Override
+    public boolean isFruitful() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return leaf.toString();
     }

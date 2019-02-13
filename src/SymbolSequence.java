@@ -31,16 +31,17 @@ final class SymbolSequence {
 
     ParseState match(List<Token> input){
         List<Token> remainder = Objects.requireNonNull(input, "Input cannot be null");
-        List<Node> children = new ArrayList<>();
+        InternalNode.Builder builder = new InternalNode.Builder();
+        //List<Node> children = new ArrayList<>();
         for (Symbol symbol:production) {
             ParseState temp = symbol.parse(remainder);
             if(!temp.isSuccess()){
                 return ParseState.FAILURE;
             }
-            children.add(temp.getNode());
+            builder.addChild(temp.getNode());
             remainder = temp.getRemainder();
         }
-        return ParseState.build(InternalNode.build(children),remainder);
+        return ParseState.build(builder.build(),remainder);
     }
 }
 
