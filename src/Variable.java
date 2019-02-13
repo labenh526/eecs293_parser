@@ -1,11 +1,9 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.Objects;
 
 public final class Variable extends AbstractToken implements Token{
 
     //Stores the representation for the variable
-    private String representation = null;
+    private String representation;
 
     //Stores cache of all created variables
     //cache works properly if Cache constructor is public
@@ -38,13 +36,11 @@ public final class Variable extends AbstractToken implements Token{
 
 
     public static final Variable build(String representation) {
-
-        Function<String, Variable> construct = (String key) -> new Variable(key);
-
-        //Error check for null strings
-        if (representation == null){
-            throw new NullPointerException("Variable representation cannot be null");
-        }
-        return cache.get(representation, construct);
+        return cache.get(Objects.requireNonNull(representation,"Variable representation cannot be null"), Variable::new);
     }
 }
+
+//Edits
+/*
+Reduced complexity and removed function in build
+ */

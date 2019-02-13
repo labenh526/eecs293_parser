@@ -6,7 +6,7 @@ final class SymbolSequence {
 
     private final List<Symbol> production;
 
-    static final SymbolSequence EPSILON = new SymbolSequence(new ArrayList<Symbol>());
+    static final SymbolSequence EPSILON = new SymbolSequence(new ArrayList<>());
 
     private SymbolSequence(List<Symbol> production){
         this.production = production;
@@ -19,9 +19,7 @@ final class SymbolSequence {
     static final SymbolSequence build(Symbol... symbols){
         ArrayList<Symbol> production = new ArrayList<>();
         for (Symbol symbol: symbols) {
-            if(symbol == null)
-                throw new NullPointerException("Symbols cannot be null");
-            production.add(symbol);
+            production.add(Objects.requireNonNull(symbol,"Symbols cannot be null"));
         }
         return new SymbolSequence(production);
     }
@@ -36,7 +34,7 @@ final class SymbolSequence {
         List<Node> children = new ArrayList<>();
         for (Symbol symbol:production) {
             ParseState temp = symbol.parse(remainder);
-            if(temp == ParseState.FAILURE){
+            if(!temp.isSuccess()){
                 return ParseState.FAILURE;
             }
             children.add(temp.getNode());
@@ -44,6 +42,10 @@ final class SymbolSequence {
         }
         return ParseState.build(InternalNode.build(children),remainder);
     }
-
-
 }
+
+//Edits
+/*
+Changed if statement to use .isSuccess
+Reduced complexity for build with multiple arguments
+ */

@@ -39,13 +39,17 @@ public final class InternalNode implements Node {
                 sb.append(node.toString());
                 sb.append(',');
             }
-            sb.deleteCharAt(sb.length() - 1);
+            if(!children.isEmpty()) {
+                sb.deleteCharAt(sb.length() - 1);
+            }
             sb.append("]");
             childString = sb.toString();
         }
         return childString;
     }
-
-
-
 }
+
+//Edits
+/*
+Fixed bug in toString method
+ */

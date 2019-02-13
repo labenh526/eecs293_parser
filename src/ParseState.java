@@ -8,11 +8,12 @@ public class ParseState {
 
     private final List<Token> remainder;
 
+    final static ParseState FAILURE = new ParseState(false,null,null);
+
     private ParseState(boolean success, Node node, List<Token> remainder){
         this.success=success;
         this.node=node;
         this.remainder=remainder;
-
     }
 
     public boolean isSuccess() {
@@ -36,18 +37,14 @@ public class ParseState {
         }
     }
 
-    final static ParseState FAILURE = new ParseState(false,null,null);
-
     public static ParseState build(Node node, List<Token> remainder){
-        if(node==null){
-            throw new NullPointerException("Node cannot be null");
-        }
-        if(remainder==null) {
-            throw new NullPointerException("remainder cannot be null");
-        }
-        return new ParseState(true, node, remainder);
+        return new ParseState(true, Objects.requireNonNull(node,"Node cannot be null"),
+                                           Objects.requireNonNull(remainder, "remainder cannot be null"));
     }
-
-
-
 }
+
+//Edits
+/*
+Moved FAILURE to top of list with other class fields
+Simplified build
+ */
