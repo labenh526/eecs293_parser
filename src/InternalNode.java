@@ -26,6 +26,11 @@ public final class InternalNode implements Node {
         return children;
     }
 
+    @Override
+    public boolean isFruitful() {
+        return !children.isEmpty();
+    }
+
     public static final InternalNode build(List<Node> children) {
         return new InternalNode(Objects.requireNonNull(children, "children must not be null."));
     }
