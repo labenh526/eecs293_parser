@@ -1,21 +1,32 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Objects;
 
 public final class Connector extends AbstractToken{
 
     private TerminalSymbol connectorType;
 
-    Map<TerminalSymbol,String> stringMap = new HashMap<TerminalSymbol, String>(){
-        {
-            put(TerminalSymbol.PLUS,"+");
-            put(TerminalSymbol.MINUS,"-");
-            put(TerminalSymbol.TIMES,"*");
-            put(TerminalSymbol.DIVIDE,"/");
-            put(TerminalSymbol.OPEN,"(");
-            put(TerminalSymbol.CLOSE,")");
-        }
-    };
+    //private static final Map<TerminalSymbol,String> stringMap = new HashMap<>();
+    private static final Map<TerminalSymbol,String> stringMap = new HashMap<>();
+    static{
+        stringMap.put(TerminalSymbol.PLUS,"+");
+        stringMap.put(TerminalSymbol.MINUS,"-");
+        stringMap.put(TerminalSymbol.TIMES,"*");
+        stringMap.put(TerminalSymbol.DIVIDE,"/");
+        stringMap.put(TerminalSymbol.OPEN,"(");
+        stringMap.put(TerminalSymbol.CLOSE,")");
+    }
+
+    private static final Map<TerminalSymbol,Boolean> boolMap = new HashMap<>();
+    static{
+        boolMap.put(TerminalSymbol.PLUS,true);
+        boolMap.put(TerminalSymbol.MINUS,true);
+        boolMap.put(TerminalSymbol.TIMES,true);
+        boolMap.put(TerminalSymbol.DIVIDE,true);
+        boolMap.put(TerminalSymbol.OPEN,true);
+        boolMap.put(TerminalSymbol.CLOSE,true);
+        boolMap.put(TerminalSymbol.VARIABLE,false);
+    }
 
     //cache works properly if Cache constructor is public
     private static Cache<TerminalSymbol,Connector> cache = new Cache<>();
@@ -28,14 +39,12 @@ public final class Connector extends AbstractToken{
     @Override
     public TerminalSymbol getType(){
         return connectorType;
+
     }
 
     @Override
     public String toString() {
-        if(this.getType()==null){
-            throw new IllegalArgumentException("Not valid connector");
-        }
-        return stringMap.get(this.getType());
+        return stringMap.get(Objects.requireNonNull(this.getType(),"Not a valid connector"));
     }
 
     public static final Connector build(TerminalSymbol type) {
@@ -43,31 +52,19 @@ public final class Connector extends AbstractToken{
         if (type == null){
             throw new NullPointerException("Cannot create connector from type null");
         }
-        else if(!isValidConnector(type)){
+        //Checks to see if type is an invalid type
+        else if(!boolMap.get(type)){
             throw new IllegalArgumentException("Method requires TerminalSymbols of type: PLUS, MINUS, " +
                     "TIMES, DIVIDE, OPEN, or CLOSE.");
         }
         return cache.get(type,Connector::new);
     }
 
-    //Helper method to check to see if a TerminalSymbol is one of the valid connector types
-    private static boolean isValidConnector(TerminalSymbol type) {
-
-        Map<TerminalSymbol,Boolean> booleanMap = new HashMap<TerminalSymbol,Boolean>(){
-            {
-                put(TerminalSymbol.PLUS,true);
-                put(TerminalSymbol.MINUS,true);
-                put(TerminalSymbol.TIMES,true);
-                put(TerminalSymbol.DIVIDE,true);
-                put(TerminalSymbol.OPEN,true);
-                put(TerminalSymbol.CLOSE,true);
-                put(TerminalSymbol.VARIABLE,false);
-            }
-        };
-        return booleanMap.get(type);
-
-    }
-
-
 }
 
+//Edits
+/*
+Removed anonymous class for stringMap
+Removed unnecessary helper method isConnectorValid and replaced with static boolMap
+Simplified complexity in toString
+ */

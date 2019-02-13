@@ -1,11 +1,7 @@
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.*;
 
 public class NonTerminalSymbolTest {
 
@@ -34,7 +30,7 @@ public class NonTerminalSymbolTest {
     @Test
     public void parseInput() {
         Node root = NonTerminalSymbol.parseInput(list1).get();
-     //   System.out.print("Test");
+        System.out.print(root);
 
     }
 }

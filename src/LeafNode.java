@@ -1,5 +1,7 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 public final class LeafNode implements Node{
 
     private final Token leaf;
@@ -13,19 +15,12 @@ public final class LeafNode implements Node{
     }
 
     public static final LeafNode build(Token newLeaf) {
-        if (newLeaf == null) {
-            throw new NullPointerException();
-        } else {
-            LeafNode leaf = new LeafNode(newLeaf);
-            return leaf;
-        }
+        return new LeafNode(Objects.requireNonNull(newLeaf,"Token cannot be null"));
     }
 
     @Override
     public List<Token> toList() {
-        List<Token> leafTree = new ArrayList<>();
-        leafTree.add(getLeaf());
-        return leafTree;
+        return Arrays.asList(getLeaf());
     }
 
     @Override
@@ -33,3 +28,10 @@ public final class LeafNode implements Node{
         return leaf.toString();
     }
 }
+
+//Edits
+/*
+Added exception message to LeafNode
+Shortened toList to only one line
+Simplified build
+ */
