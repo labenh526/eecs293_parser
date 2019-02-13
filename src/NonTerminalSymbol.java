@@ -36,7 +36,7 @@ public enum NonTerminalSymbol implements Symbol {
     private final static Map<NonTerminalSymbol, Map<TerminalSymbol, SymbolSequence>> productions = new EnumMap<>(NonTerminalSymbol.class);
     static {
         /*Map for Expression */
-        Map<TerminalSymbol, SymbolSequence> expressionMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> expressionMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, null);
         expressionMap.put(TerminalSymbol.MINUS, SymbolSequence.build(TERM, EXPRESSION_TAIL));
         expressionMap.put(TerminalSymbol.TIMES, null);
@@ -47,7 +47,7 @@ public enum NonTerminalSymbol implements Symbol {
         expressionMap.put(null, SymbolSequence.EPSILON);
 
         /*Map for Expression_Tail */
-        Map<TerminalSymbol, SymbolSequence> expressionTailMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> expressionTailMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL));
         expressionMap.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL));
         expressionMap.put(TerminalSymbol.TIMES, SymbolSequence.EPSILON);
@@ -58,7 +58,7 @@ public enum NonTerminalSymbol implements Symbol {
         expressionMap.put(null, SymbolSequence.EPSILON);
 
         /*Map for Term */
-        Map<TerminalSymbol, SymbolSequence> termMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> termMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, null);
         expressionMap.put(TerminalSymbol.MINUS, SymbolSequence.build(UNARY, TERM_TAIL));
         expressionMap.put(TerminalSymbol.TIMES, null);
@@ -69,7 +69,7 @@ public enum NonTerminalSymbol implements Symbol {
         expressionMap.put(null, SymbolSequence.EPSILON);
 
         /*Map for Term_Tail */
-        Map<TerminalSymbol, SymbolSequence> termTailMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> termTailMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, SymbolSequence.EPSILON);
         expressionMap.put(TerminalSymbol.MINUS, SymbolSequence.EPSILON);
         expressionMap.put(TerminalSymbol.TIMES, SymbolSequence.build(TerminalSymbol.TIMES, UNARY, TERM_TAIL));
@@ -80,7 +80,7 @@ public enum NonTerminalSymbol implements Symbol {
         expressionMap.put(null, SymbolSequence.EPSILON);
 
         /*Map for Unary */
-        Map<TerminalSymbol, SymbolSequence> unaryMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> unaryMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, null);
         expressionMap.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, FACTOR));
         expressionMap.put(TerminalSymbol.TIMES, null);
@@ -91,7 +91,7 @@ public enum NonTerminalSymbol implements Symbol {
         expressionMap.put(null, SymbolSequence.EPSILON);
 
         /*Map for Factor */
-        Map<TerminalSymbol, SymbolSequence> factorMap = new EnumMap<>(TerminalSymbol.class);
+        Map<TerminalSymbol, SymbolSequence> factorMap = new HashMap<>();
         expressionMap.put(TerminalSymbol.PLUS, null);
         expressionMap.put(TerminalSymbol.MINUS, null);
         expressionMap.put(TerminalSymbol.TIMES, null);
@@ -112,18 +112,24 @@ public enum NonTerminalSymbol implements Symbol {
 
     @Override
     public ParseState parse(List<Token> input) {
-        for (SymbolSequence seq: nonTerminalMap.get(this)) {
-            ParseState state = seq.match(Objects.requireNonNull(input,"Input cannot be null"));
-            if(state.isSuccess())
-                return state;
-        }
+        ParseState state;
+//        if (input.isEmpty()) {
+//            state = productions.get(this).get(null).match(Objects.requireNonNull(input,"Input cannot be null"));
+//        }
+//        else {
+            System.out.println(input);
+            state = productions.get(this).get(input.get(0).getType()).match(Objects.requireNonNull(input, "Input cannot be null"));
+        //}
+        if(state.isSuccess())
+            return state;
         return ParseState.FAILURE;
     }
 
     static final Optional<Node> parseInput(List<Token> input){
         ParseState testParse = EXPRESSION.parse(Objects.requireNonNull(input, "Input cannot be null"));
-        if (!testParse.isSuccess() || !testParse.hasNoRemainder())
+        if (!testParse.isSuccess() || !testParse.hasNoRemainder()) {
             return Optional.empty();
+        }
         else {
             return Optional.of(testParse.getNode());
         }
