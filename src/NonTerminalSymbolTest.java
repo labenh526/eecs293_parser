@@ -1,6 +1,8 @@
 import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+import static org.junit.Assert.assertEquals;
 
 
 public class NonTerminalSymbolTest {
@@ -21,16 +23,15 @@ public class NonTerminalSymbolTest {
 
 
     List<Token> list1 = Arrays.asList(a,plusCon,b,divideCon,c);
+    List<Token> failList = Arrays.asList(plusCon,divideCon,b);
 
-
-    @Test
-    public void parse() {
-    }
 
     @Test
     public void parseInput() {
-        Node root = NonTerminalSymbol.parseInput(list1).get();
-        System.out.print(root);
-
+        assertEquals("[[a],[+,[[b],[/,[c]]]]]",NonTerminalSymbol.parseInput(list1).get().toString());
+    }
+    @Test(expected = NoSuchElementException.class)
+    public void testParseInputException() {
+        NonTerminalSymbol.parseInput(failList).get();
     }
 }
