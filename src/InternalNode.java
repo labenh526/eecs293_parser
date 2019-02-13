@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class InternalNode implements Node {
 
@@ -52,6 +49,38 @@ public final class InternalNode implements Node {
         }
         return childString;
     }
+
+    public static class Builder{
+        private List<Node> children = new ArrayList<>();
+
+        public boolean addChild(Node node){
+            return children.add(node);
+        }
+
+        public Builder simplify(){
+            Iterator<Node> iterator = children.iterator();
+            while (iterator.hasNext()){
+                if(!iterator.next().isFruitful()){
+                    iterator.remove();
+                }
+            }
+            if(isSingleInternalNode()){
+                children = children.get(0).getChildren();
+            }
+            return this;
+        }
+
+        //Helper method
+        private boolean isSingleInternalNode(){
+            return children.size()==1 && children.get(0) instanceof InternalNode;
+        }
+
+        public InternalNode build(){
+            this.simplify();
+            return new InternalNode(children);
+        }
+    }
+
 }
 
 //Edits
