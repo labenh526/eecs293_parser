@@ -69,15 +69,21 @@ public final class InternalNode implements Node {
 
         public Builder simplify(){
             Iterator<Node> iterator = children.iterator();
+            List<Node> addNodes = new ArrayList<Node>();
             while (iterator.hasNext()){
-                if(!iterator.next().isFruitful()){
+                Node node = iterator.next();
+                if(!node.isFruitful()){
                     iterator.remove();
                 }
+                else {
+                    if (node instanceof InternalNode && !node.getChildren().isEmpty() && node.isStartedByOperator()) {
+                        iterator.remove();
+                        addNodes.addAll(node.getChildren());
+                    }
+                }
             }
+            children.addAll(addNodes);
             if(isSingleInternalNode()){
-                children = children.get(0).getChildren();
-            }
-            if(!children.isEmpty() && children.get(0).isOperator()){
                 children = children.get(0).getChildren();
             }
             return this;
