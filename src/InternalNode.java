@@ -28,6 +28,16 @@ public final class InternalNode implements Node {
         return !children.isEmpty();
     }
 
+    @Override
+    public boolean isOperator() {
+        return false;
+    }
+
+    @Override
+    public boolean isStartedByOperator() {
+        return getChildren().get(0).isOperator();
+    }
+
     public static final InternalNode build(List<Node> children) {
         return new InternalNode(Objects.requireNonNull(children, "children must not be null."));
     }

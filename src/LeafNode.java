@@ -34,6 +34,16 @@ public final class LeafNode implements Node{
     }
 
     @Override
+    public boolean isOperator() {
+        return this.getLeaf().isOperator();
+    }
+
+    @Override
+    public boolean isStartedByOperator() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return leaf.toString();
     }

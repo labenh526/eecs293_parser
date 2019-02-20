@@ -5,5 +5,6 @@ public interface Node {
     List<Token> toList();
     List<Node> getChildren();
     boolean isFruitful();
-
+    boolean isOperator();
+    boolean isStartedByOperator();
 }
