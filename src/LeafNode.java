@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class LeafNode implements Node{
 
@@ -31,6 +32,26 @@ public final class LeafNode implements Node{
     @Override
     public boolean isFruitful() {
         return true;
+    }
+
+    @Override
+    public boolean isOperator() {
+        return this.getLeaf().isOperator();
+    }
+
+    @Override
+    public boolean isStartedByOperator() {
+        return false;
+    }
+
+    @Override
+    public Optional<Node> firstChild() {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean isSingleLeafParent() {
+        return false;
     }
 
     @Override

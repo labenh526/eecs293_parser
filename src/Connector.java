@@ -28,6 +28,17 @@ public final class Connector extends AbstractToken{
         boolMap.put(TerminalSymbol.VARIABLE,false);
     }
 
+    private static final Map<TerminalSymbol,Boolean> isOperatorMap = new HashMap<>();
+    static{
+        isOperatorMap.put(TerminalSymbol.PLUS,true);
+        isOperatorMap.put(TerminalSymbol.MINUS,true);
+        isOperatorMap.put(TerminalSymbol.TIMES,true);
+        isOperatorMap.put(TerminalSymbol.DIVIDE,true);
+        isOperatorMap.put(TerminalSymbol.OPEN,false);
+        isOperatorMap.put(TerminalSymbol.CLOSE,false);
+        isOperatorMap.put(TerminalSymbol.VARIABLE,false);
+    }
+
     //cache works properly if Cache constructor is public
     private static Cache<TerminalSymbol,Connector> cache = new Cache<>();
 
@@ -40,6 +51,11 @@ public final class Connector extends AbstractToken{
     public TerminalSymbol getType(){
         return connectorType;
 
+    }
+
+    @Override
+    public boolean isOperator() {
+        return isOperatorMap.get(this.getType());
     }
 
     @Override

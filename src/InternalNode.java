@@ -28,6 +28,31 @@ public final class InternalNode implements Node {
         return !children.isEmpty();
     }
 
+    @Override
+    public boolean isOperator() {
+        return false;
+    }
+
+    @Override
+    public boolean isStartedByOperator() {
+        return getChildren().get(0).isOperator();
+    }
+
+    @Override
+    public Optional<Node> firstChild() {
+        if (isFruitful()){
+            return Optional.of(children.get(0));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean isSingleLeafParent() {
+        return children.size()==1 && firstChild().get() instanceof LeafNode;
+    }
+
     public static final InternalNode build(List<Node> children) {
         return new InternalNode(Objects.requireNonNull(children, "children must not be null."));
     }
@@ -58,21 +83,53 @@ public final class InternalNode implements Node {
         }
 
         public Builder simplify(){
-            Iterator<Node> iterator = children.iterator();
-            while (iterator.hasNext()){
-                if(!iterator.next().isFruitful()){
-                    iterator.remove();
-                }
-            }
+
+            children=simplifyChildren(children);
+
             if(isSingleInternalNode()){
                 children = children.get(0).getChildren();
             }
+
             return this;
         }
+
 
         //Helper method
         private boolean isSingleInternalNode(){
             return children.size()==1 && children.get(0) instanceof InternalNode;
+        }
+
+        private List<Node> simplifyChildren(List<Node> oldChildren){
+            List<Node> newChildren = new ArrayList<>();
+            boolean isPreviousOperator = false;
+            for (Node child: oldChildren) {
+                if (child.isFruitful()) {
+                    if(child.isSingleLeafParent()){
+                        newChildren.add(child.firstChild().get());
+                    }
+                    else if (startsWithOperator(child,isPreviousOperator)) {
+                        newChildren.addAll(child.getChildren());
+                        isPreviousOperator = true;
+                    } else {
+                        newChildren.add(child);
+                        isPreviousOperator = false;
+                    }
+
+                }
+            }
+            return newChildren;
+        }
+
+        private static boolean hasChildren(Node node){
+            return node instanceof InternalNode && !node.getChildren().isEmpty();
+        }
+
+        private static boolean isLoneOperator(Node node, boolean previousOperator){
+            return node.isStartedByOperator() && !previousOperator;
+        }
+
+        private static boolean startsWithOperator(Node node, boolean previousOperator){
+            return hasChildren(node) && isLoneOperator(node, previousOperator);
         }
 
         public InternalNode build(){
