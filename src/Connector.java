@@ -64,7 +64,5 @@ public final class Connector extends AbstractToken{
 
 //Edits
 /*
-Removed anonymous class for stringMap
-Removed unnecessary helper method isConnectorValid and replaced with static boolMap
-Simplified complexity in toString
+
  */

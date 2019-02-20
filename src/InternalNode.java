@@ -85,5 +85,5 @@ public final class InternalNode implements Node {
 
 //Edits
 /*
-Fixed bug in toString method
+
  */

@@ -41,7 +41,4 @@ public final class LeafNode implements Node{
 
 //Edits
 /*
-Added exception message to LeafNode
-Shortened toList to only one line
-Simplified build
  */

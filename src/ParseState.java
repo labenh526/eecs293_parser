@@ -45,6 +45,4 @@ public class ParseState {
 
 //Edits
 /*
-Moved FAILURE to top of list with other class fields
-Simplified build
  */

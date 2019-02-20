@@ -19,6 +19,4 @@ public enum TerminalSymbol implements Symbol{
 
 //Edits
 /*
-Removed unnecessary code
-Used .isEmpty instead of .size==0
  */

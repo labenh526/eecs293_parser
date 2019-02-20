@@ -14,84 +14,67 @@ public enum NonTerminalSymbol implements Symbol {
 
     private final static Map<NonTerminalSymbol, Map<TerminalSymbol, SymbolSequence>> productions = new EnumMap<>(NonTerminalSymbol.class);
     static {
-        /* Create productions */
-        SymbolSequence expressionProduction1 = SymbolSequence.build(TERM, EXPRESSION_TAIL);
-        SymbolSequence expressionTailProduction1 = SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL);
-        SymbolSequence expressionTailProduction2 = SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL);
-        SymbolSequence termProduction1 = SymbolSequence.build(UNARY, TERM_TAIL);
-        SymbolSequence termTailProduction1 = SymbolSequence.build(TerminalSymbol.TIMES, UNARY, TERM_TAIL);
-        SymbolSequence termTailProduction2 = SymbolSequence.build(TerminalSymbol.DIVIDE, UNARY, TERM_TAIL);
-        SymbolSequence unaryProduction1 = SymbolSequence.build(TerminalSymbol.MINUS, FACTOR);
-        SymbolSequence unaryProduction2 = SymbolSequence.build(FACTOR);
-        SymbolSequence factorProduction1 = SymbolSequence.build(TerminalSymbol.OPEN, EXPRESSION, TerminalSymbol.CLOSE);
-        SymbolSequence factorProduction2 = SymbolSequence.build(TerminalSymbol.VARIABLE);
+        /* Create productions*/
+        SymbolSequence expressionProduction = SymbolSequence.build(TERM, EXPRESSION_TAIL);
+        SymbolSequence expressionTailProductionPlus = SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL);
+        SymbolSequence expressionTailProductionMinus = SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL);
+        SymbolSequence termProduction = SymbolSequence.build(UNARY, TERM_TAIL);
+        SymbolSequence termTailProductionTimes = SymbolSequence.build(TerminalSymbol.TIMES, UNARY, TERM_TAIL);
+        SymbolSequence termTailProductionDivide = SymbolSequence.build(TerminalSymbol.DIVIDE, UNARY, TERM_TAIL);
+        SymbolSequence unaryProductionMinus = SymbolSequence.build(TerminalSymbol.MINUS, FACTOR);
+        SymbolSequence unaryProductionFactor = SymbolSequence.build(FACTOR);
+        SymbolSequence factorProductionOpen = SymbolSequence.build(TerminalSymbol.OPEN, EXPRESSION, TerminalSymbol.CLOSE);
+        SymbolSequence factorProductionVariable = SymbolSequence.build(TerminalSymbol.VARIABLE);
 
-        /*Map for Expression */
-        SymbolSequence[] expressionProductions =   {null,
-                                                    expressionProduction1,
-                                                    null,
-                                                    null,
-                                                    expressionProduction1,
-                                                    null,
-                                                    expressionProduction1};
+        /*Map for Expression*/
+        Map<TerminalSymbol, SymbolSequence> expressionMap = new HashMap<>();
 
-        Map<TerminalSymbol, SymbolSequence> expressionMap = generateMap(expressionProductions);
+        expressionMap.put(TerminalSymbol.MINUS,expressionProduction);
+        expressionMap.put(TerminalSymbol.OPEN, expressionProduction);
+        expressionMap.put(TerminalSymbol.VARIABLE, expressionProduction);
+        expressionMap.put(null, SymbolSequence.EPSILON);
 
         /* Map for Expression_Tail*/
-        SymbolSequence[] expressionTailProductions =   {expressionTailProduction1,
-                                                        expressionTailProduction2,
-                                                        SymbolSequence.EPSILON,
-                                                        SymbolSequence.EPSILON,
-                                                        SymbolSequence.EPSILON,
-                                                        SymbolSequence.EPSILON,
-                                                        SymbolSequence.EPSILON};
+        Map<TerminalSymbol, SymbolSequence> expressionTailMap = new HashMap<>();
 
-        Map<TerminalSymbol, SymbolSequence> expressionTailMap = generateMap(expressionTailProductions);
+        expressionTailMap.put(TerminalSymbol.PLUS,expressionTailProductionPlus);
+        expressionTailMap.put(TerminalSymbol.MINUS, expressionTailProductionMinus);
+        expressionTailMap.put(TerminalSymbol.CLOSE, SymbolSequence.EPSILON);
+        expressionTailMap.put(null, SymbolSequence.EPSILON);
 
-        /*Map for Term */
-        SymbolSequence[] termProductions =  {null,
-                                            termProduction1,
-                                            null,
-                                            null,
-                                            termProduction1,
-                                            null,
-                                            termProduction1};
+        /* Map for Term*/
+        Map<TerminalSymbol, SymbolSequence> termMap = new HashMap<>();
 
-        Map<TerminalSymbol, SymbolSequence> termMap = generateMap(termProductions);
+        termMap.put(TerminalSymbol.MINUS,termProduction);
+        termMap.put(TerminalSymbol.OPEN, termProduction);
+        termMap.put(TerminalSymbol.VARIABLE, termProduction);
+        termMap.put(null, SymbolSequence.EPSILON);
 
-        /*Map for Term_Tail */
-        SymbolSequence[] termTailProductions =  {SymbolSequence.EPSILON,
-                                                SymbolSequence.EPSILON,
-                                                termTailProduction1,
-                                                termTailProduction2,
-                                                SymbolSequence.EPSILON,
-                                                SymbolSequence.EPSILON,
-                                                SymbolSequence.EPSILON};
+        /* Map for Term_Tail*/
+        Map<TerminalSymbol, SymbolSequence> termTailMap = new HashMap<>();
 
-        Map<TerminalSymbol, SymbolSequence> termTailMap = generateMap(termTailProductions);
+        termTailMap.put(TerminalSymbol.TIMES,termTailProductionTimes);
+        termTailMap.put(TerminalSymbol.DIVIDE, termTailProductionDivide);
+        termTailMap.put(TerminalSymbol.PLUS, SymbolSequence.EPSILON);
+        termTailMap.put(TerminalSymbol.CLOSE, SymbolSequence.EPSILON);
+        termTailMap.put(TerminalSymbol.MINUS, SymbolSequence.EPSILON);
+        termTailMap.put(null, SymbolSequence.EPSILON);
 
-        /*Map for Unary */
-        SymbolSequence[] unaryProductions = {null,
-                                            unaryProduction1,
-                                            null,
-                                            null,
-                                            unaryProduction2,
-                                            null,
-                                            unaryProduction2};
+        /*Map for Unary*/
+        Map<TerminalSymbol, SymbolSequence> unaryMap = new HashMap<>();
 
-        Map<TerminalSymbol, SymbolSequence> unaryMap = generateMap(unaryProductions);
+        unaryMap.put(TerminalSymbol.MINUS,unaryProductionMinus);
+        unaryMap.put(TerminalSymbol.OPEN, unaryProductionFactor);
+        unaryMap.put(TerminalSymbol.VARIABLE, unaryProductionFactor);
+        unaryMap.put(null, SymbolSequence.EPSILON);
 
+        /*Map for Factor*/
+        Map<TerminalSymbol, SymbolSequence> factorMap = new HashMap<>();
 
-        /*Map for Factor */
-        SymbolSequence[] factorProductions =    {null,
-                                                null,
-                                                null,
-                                                null,
-                                                factorProduction1,
-                                                null,
-                                                factorProduction2};
+        factorMap.put(TerminalSymbol.OPEN, factorProductionOpen);
+        factorMap.put(TerminalSymbol.VARIABLE, factorProductionVariable);
+        factorMap.put(null, SymbolSequence.EPSILON);
 
-        Map<TerminalSymbol, SymbolSequence> factorMap = generateMap(factorProductions);
 
         //Build productions
         productions.put(EXPRESSION, expressionMap);
@@ -139,24 +122,11 @@ public enum NonTerminalSymbol implements Symbol {
         return production.match(input);
     }
 
-    private static Map<TerminalSymbol, SymbolSequence> generateMap(SymbolSequence[] productions) {
-        Map<TerminalSymbol, SymbolSequence> map= new HashMap<>();
-        map.put(TerminalSymbol.PLUS, productions[0]);
-        map.put(TerminalSymbol.MINUS, productions[1]);
-        map.put(TerminalSymbol.TIMES, productions[2]);
-        map.put(TerminalSymbol.DIVIDE, productions[3]);
-        map.put(TerminalSymbol.OPEN, productions[4]);
-        map.put(TerminalSymbol.CLOSE, productions[5]);
-        map.put(TerminalSymbol.VARIABLE, productions[6]);
-        map.put(null, SymbolSequence.EPSILON);
-        return map;
-    }
 }
 
 
 //Edits
 /*
-Changed HashMap to EnumMap
-Moved anonymous class into static block
-Combined ifElse in parseInput
+Updated productions to remove excess EPSILON
+Removed generate map function
  */
