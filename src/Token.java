@@ -4,5 +4,7 @@ public interface Token {
 
     boolean matches(TerminalSymbol type);
 
+    boolean isOperator();
+
 }
 

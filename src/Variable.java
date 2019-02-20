@@ -25,6 +25,11 @@ public final class Variable extends AbstractToken implements Token{
     }
 
     @Override
+    public boolean isOperator() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return this.getRepresentation();
     }
