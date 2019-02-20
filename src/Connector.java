@@ -55,7 +55,7 @@ public final class Connector extends AbstractToken{
 
     @Override
     public boolean isOperator() {
-        return isOperatorMap.get(this);
+        return isOperatorMap.get(this.getType());
     }
 
     @Override
