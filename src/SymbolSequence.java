@@ -47,6 +47,4 @@ final class SymbolSequence {
 
 //Edits
 /*
-Changed if statement to use .isSuccess
-Reduced complexity for build with multiple arguments
  */

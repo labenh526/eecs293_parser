@@ -42,5 +42,4 @@ public final class Variable extends AbstractToken implements Token{
 
 //Edits
 /*
-Reduced complexity and removed function in build
  */
