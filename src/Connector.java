@@ -30,13 +30,13 @@ public final class Connector extends AbstractToken{
 
     private static final Map<TerminalSymbol,Boolean> isOperatorMap = new HashMap<>();
     static{
-        boolMap.put(TerminalSymbol.PLUS,true);
-        boolMap.put(TerminalSymbol.MINUS,true);
-        boolMap.put(TerminalSymbol.TIMES,true);
-        boolMap.put(TerminalSymbol.DIVIDE,true);
-        boolMap.put(TerminalSymbol.OPEN,false);
-        boolMap.put(TerminalSymbol.CLOSE,false);
-        boolMap.put(TerminalSymbol.VARIABLE,false);
+        isOperatorMap.put(TerminalSymbol.PLUS,true);
+        isOperatorMap.put(TerminalSymbol.MINUS,true);
+        isOperatorMap.put(TerminalSymbol.TIMES,true);
+        isOperatorMap.put(TerminalSymbol.DIVIDE,true);
+        isOperatorMap.put(TerminalSymbol.OPEN,false);
+        isOperatorMap.put(TerminalSymbol.CLOSE,false);
+        isOperatorMap.put(TerminalSymbol.VARIABLE,false);
     }
 
     //cache works properly if Cache constructor is public

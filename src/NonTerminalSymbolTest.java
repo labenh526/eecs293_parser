@@ -29,9 +29,10 @@ public class NonTerminalSymbolTest {
     @Test
     public void parseInput() {
         assertEquals("[[a],[+,[[b],[/,[c]]]]]",NonTerminalSymbol.parseInput(list1).get().toString());
+        System.out.println(NonTerminalSymbol.parseInput(list1).get().toString());
     }
     @Test(expected = NoSuchElementException.class)
     public void testParseInputException() {
         NonTerminalSymbol.parseInput(failList).get();
-    }
+   }
 }

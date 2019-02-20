@@ -74,7 +74,7 @@ public final class InternalNode implements Node {
                     iterator.remove();
                 }
             }
-            if(isSingleInternalNode()){
+            if(isSingleInternalNode()||children.get(0).isOperator()){
                 children = children.get(0).getChildren();
             }
             return this;
