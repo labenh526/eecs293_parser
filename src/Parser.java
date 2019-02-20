@@ -1,36 +1,38 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class Parser {
 
+    List<Token> input = new ArrayList<>();
+    static Map<String,Token> parseMap = new HashMap<>();
+    static{
+        parseMap.put("+", Connector.build(TerminalSymbol.PLUS));
+        parseMap.put("-", Connector.build(TerminalSymbol.MINUS));
+        parseMap.put("*", Connector.build(TerminalSymbol.TIMES));
+        parseMap.put("/", Connector.build(TerminalSymbol.DIVIDE));
+        parseMap.put("(", Connector.build(TerminalSymbol.OPEN));
+        parseMap.put(")", Connector.build(TerminalSymbol.CLOSE));
+    }
 
-//    public static void main(String args[]) {
-//        LeafNode divide = LeafNode.build(Connector.build(TerminalSymbol.DIVIDE));
-//        LeafNode c = LeafNode.build(Variable.build("c"));
-//        LeafNode b = LeafNode.build(Variable.build("b"));
-//        LeafNode plus = LeafNode.build(Connector.build(TerminalSymbol.PLUS));
-//        LeafNode a = LeafNode.build(Variable.build("a"));
-//
-//        ArrayList<Node> node1children = new ArrayList<>();
-//        node1children.add(divide);
-//        node1children.add(c);
-//        InternalNode one = InternalNode.build(node1children);
-//
-//        ArrayList<Node> node2children = new ArrayList<>();
-//        node2children.add(b);
-//        node2children.add(one);
-//        InternalNode two = InternalNode.build(node2children);
-//
-//        ArrayList<Node> node3children = new ArrayList<>();
-//        node3children.add(plus);
-//        node3children.add(two);
-//        InternalNode three = InternalNode.build(node3children);
-//
-//        ArrayList<Node> node4children = new ArrayList<>();
-//        node4children.add(a);
-//        node4children.add(three);
-//        InternalNode four = InternalNode.build(node4children);
-//
-//        System.out.println(four.toList());
-//        System.out.println(four.toString());
-//    }
+
+    public static void main(String[] args){
+        List<Token> input = new ArrayList<>();
+        for (String token: args){
+            input.add(toToken(token));
+        }
+        System.out.println(NonTerminalSymbol.parseInput(input).get());
+    }
+
+    private static Token toToken(String input){
+        Token temp = parseMap.get(input);
+        if(temp != null){
+            return temp;
+        }
+        else{
+            return Variable.build(input);
+        }
+    }
 }
