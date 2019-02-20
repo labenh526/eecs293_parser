@@ -38,6 +38,21 @@ public final class InternalNode implements Node {
         return getChildren().get(0).isOperator();
     }
 
+    @Override
+    public Optional<Node> firstChild() {
+        if (isFruitful()){
+            return Optional.of(children.get(0));
+        }
+        else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean isSingleLeafParent() {
+        return children.size()==1 && firstChild().get() instanceof LeafNode;
+    }
+
     public static final InternalNode build(List<Node> children) {
         return new InternalNode(Objects.requireNonNull(children, "children must not be null."));
     }
@@ -89,13 +104,17 @@ public final class InternalNode implements Node {
             boolean isPreviousOperator = false;
             for (Node child: oldChildren) {
                 if (child.isFruitful()) {
-                    if (startsWithOperator(child,isPreviousOperator)) {
+                    if(child.isSingleLeafParent()){
+                        newChildren.add(child.firstChild().get());
+                    }
+                    else if (startsWithOperator(child,isPreviousOperator)) {
                         newChildren.addAll(child.getChildren());
                         isPreviousOperator = true;
                     } else {
                         newChildren.add(child);
                         isPreviousOperator = false;
                     }
+
                 }
             }
             return newChildren;
