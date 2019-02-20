@@ -68,32 +68,49 @@ public final class InternalNode implements Node {
         }
 
         public Builder simplify(){
-           List<Node> newChildren = new ArrayList<>();
-           boolean isPreviousOperator = false;
-            for (Node child: children) {
-                if(child.isFruitful())
-                    if(child instanceof InternalNode && !child.getChildren().isEmpty() && child.isStartedByOperator() && !isPreviousOperator){
-                        newChildren.addAll(child.getChildren());
-                        isPreviousOperator=true;
-                    }
-                    else {
-                        newChildren.add(child);
-                        isPreviousOperator=false;
-                    }
-            }
-            children=newChildren;
+
+            children=simplifyChildren(children);
 
             if(isSingleInternalNode()){
                 children = children.get(0).getChildren();
             }
 
             return this;
-            }
+        }
 
 
         //Helper method
         private boolean isSingleInternalNode(){
             return children.size()==1 && children.get(0) instanceof InternalNode;
+        }
+
+        private List<Node> simplifyChildren(List<Node> oldChildren){
+            List<Node> newChildren = new ArrayList<>();
+            boolean isPreviousOperator = false;
+            for (Node child: oldChildren) {
+                if (child.isFruitful()) {
+                    if (startsWithOperator(child,isPreviousOperator)) {
+                        newChildren.addAll(child.getChildren());
+                        isPreviousOperator = true;
+                    } else {
+                        newChildren.add(child);
+                        isPreviousOperator = false;
+                    }
+                }
+            }
+            return newChildren;
+        }
+
+        private static boolean hasChildren(Node node){
+            return node instanceof InternalNode && !node.getChildren().isEmpty();
+        }
+
+        private static boolean isLoneOperator(Node node, boolean previousOperator){
+            return node.isStartedByOperator() && !previousOperator;
+        }
+
+        private static boolean startsWithOperator(Node node, boolean previousOperator){
+            return hasChildren(node) && isLoneOperator(node, previousOperator);
         }
 
         public InternalNode build(){
