@@ -1,4 +1,8 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Objects;
 
 public final class InternalNode implements Node {
 
@@ -16,7 +20,7 @@ public final class InternalNode implements Node {
         for (Node child : children) {
             tempList.addAll(child.toList());
         }
-        return tempList;
+        return Collections.unmodifiableList(tempList);
     }
 
     public List<Node> getChildren() {
@@ -142,5 +146,6 @@ public final class InternalNode implements Node {
 
 //Edits
 /*
-
+Changed import to not be all of util
+Changed toList to return an unmodifiable list
  */

@@ -17,17 +17,6 @@ public final class Connector extends AbstractToken{
         stringMap.put(TerminalSymbol.CLOSE,")");
     }
 
-    private static final Map<TerminalSymbol,Boolean> boolMap = new HashMap<>();
-    static{
-        boolMap.put(TerminalSymbol.PLUS,true);
-        boolMap.put(TerminalSymbol.MINUS,true);
-        boolMap.put(TerminalSymbol.TIMES,true);
-        boolMap.put(TerminalSymbol.DIVIDE,true);
-        boolMap.put(TerminalSymbol.OPEN,true);
-        boolMap.put(TerminalSymbol.CLOSE,true);
-        boolMap.put(TerminalSymbol.VARIABLE,false);
-    }
-
     private static final Map<TerminalSymbol,Boolean> isOperatorMap = new HashMap<>();
     static{
         isOperatorMap.put(TerminalSymbol.PLUS,true);
@@ -69,7 +58,7 @@ public final class Connector extends AbstractToken{
             throw new NullPointerException("Cannot create connector from type null");
         }
         //Checks to see if type is an invalid type
-        else if(!boolMap.get(type)){
+        else if(type==TerminalSymbol.VARIABLE){
             throw new IllegalArgumentException("Method requires TerminalSymbols of type: PLUS, MINUS, " +
                     "TIMES, DIVIDE, OPEN, or CLOSE.");
         }
@@ -80,5 +69,5 @@ public final class Connector extends AbstractToken{
 
 //Edits
 /*
-
+Removed BoolMap
  */

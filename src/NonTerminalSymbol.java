@@ -1,7 +1,5 @@
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 
 import java.util.*;
-import java.util.EnumMap;
 
 public enum NonTerminalSymbol implements Symbol {
 
@@ -129,4 +127,5 @@ public enum NonTerminalSymbol implements Symbol {
 /*
 Updated productions to remove excess EPSILON
 Removed generate map function
+Removed unnecessary imports
  */
